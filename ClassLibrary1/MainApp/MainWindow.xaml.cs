@@ -35,7 +35,16 @@ namespace MainApp
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+           
             game = Board.CreateNewGame(3);
+
+            for(var i=0;i<3;i++)
+            {
+                boardView.ColumnDefinitions.Add(new ColumnDefinition());
+                boardView.RowDefinitions.Add(new RowDefinition());
+            }
+
+
            await game.SetPlayer(new Player("Player1", SharedApp.PlayerType.Human, SharedApp.PlayerPionType.Circle),
                 new Player("Player2", SharedApp.PlayerType.Human, SharedApp.PlayerPionType.Cross));
 
@@ -68,7 +77,7 @@ namespace MainApp
 
 
 
-            if(FreePosition(newPosition) && player!=null && player.Pions.Count<3 )
+            if(FreePosition(newPosition) && player!=null && player.Pions.Count< await game.GetBoardCount() )
             {
                 var pion = new PionView(await player.CreatePion(),player);
                 pion.PionModel.Position = newPosition;
@@ -94,6 +103,12 @@ namespace MainApp
                 game.SelectedPion = null;
      //           pion.Background = new SolidColorBrush(Colors.Red);
             }
+
+            gv.ItemsSource = game.GetGreedy();
+            gvHs.ItemsSource = game.GetHs();
+            gvFSK.ItemsSource = game.GetFSK();
+            fo.Content = game.GetFO();
+
         }
 
         private void Pion_OnSelected(PionView pion)

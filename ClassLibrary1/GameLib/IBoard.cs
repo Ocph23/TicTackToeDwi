@@ -1,5 +1,6 @@
 ﻿using SharedApp;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,10 @@ namespace GameLib
         Task SwichPlayer();
         Task<Player> GetPlayer(int Id);
         Task<Player> GetPlayerIsPlay();
+        Task<int> GetBoardCount();
+        IEnumerable GetGreedy();
+        IEnumerable GetHs();
+        IEnumerable GetFSK();
+        string GetFO();
     }
 }

@@ -6,16 +6,31 @@
         xmlns:local="clr-namespace:MainApp"
         mc:Ignorable="d"
         Title="MainWindow" Height="498.214" Width="652.143">
-    <Grid Margin="20" x:Name="boardView" PreviewMouseLeftButtonDown="boardView_PreviewMouseLeftButtonDown" Background="AliceBlue">
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="241*"/>
+            <ColumnDefinition Width="81*"/>
         </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="20">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="TicTacToe.png" />
+            </StackPanel.Background>
+        </StackPanel>
+
+        <Grid  Grid.Column="0" Margin="20" x:Name="boardView" PreviewMouseLeftButtonDown="boardView_PreviewMouseLeftButtonDown" >
+            <Grid.Background>
+                <SolidColorBrush Color="#FFB45454" Opacity="0.2"/>
+            </Grid.Background>
+
+        </Grid>
+        <StackPanel Grid.Column="1">
+            <DataGrid Grid.Column="1" x:Name="gv" />
+            <DataGrid Grid.Column="1" x:Name="gvHs" />
+            <DataGrid Grid.Column="1" x:Name="gvFSK" />
+            <DataGrid Grid.Column="1" x:Name="gvFO" />
+            <Label Name="fo"></Label>
+        </StackPanel>
+        
     </Grid>
+
 </Window>
