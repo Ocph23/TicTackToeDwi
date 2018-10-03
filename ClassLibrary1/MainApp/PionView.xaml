@@ -6,16 +6,35 @@
              xmlns:local="clr-namespace:MainApp"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200">
-    <Border x:Name="border" CornerRadius="90" >
-        <Border.Style>
-            <Style TargetType="Border">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                        <Setter Property="Background" Value="Green" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Border.Style>
-        <Button Background="Transparent" Click="Button_Click"></Button>
-    </Border>
+    <Grid >
+        <Button Background="Transparent" Click="Button_Click" Height="Auto" Width="Auto" BorderBrush="{x:Null}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="Green"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="1">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+
+        </Button>
+        <DockPanel Name="dataView">
+           
+           
+         
+        </DockPanel>
+        
+    </Grid>
+   
 </UserControl>

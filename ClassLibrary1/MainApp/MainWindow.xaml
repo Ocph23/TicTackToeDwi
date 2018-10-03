@@ -3,34 +3,95 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="498.214" Width="652.143">
-    <Grid>
+        xmlns:local="clr-namespace:MainApp" Style="{StaticResource windowStyle}"
+        mc:Ignorable="d"  WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="750" Width="1000">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="238*"/>
+            <RowDefinition Height="37*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="241*"/>
-            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="25*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Margin="20">
-            <StackPanel.Background>
-                <ImageBrush ImageSource="TicTacToe.png" />
-            </StackPanel.Background>
-        </StackPanel>
-
-        <Grid  Grid.Column="0" Margin="20" x:Name="boardView" PreviewMouseLeftButtonDown="boardView_PreviewMouseLeftButtonDown" >
-            <Grid.Background>
-                <SolidColorBrush Color="#FFB45454" Opacity="0.2"/>
-            </Grid.Background>
-
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+         
+            <GroupBox Padding="10" Header="Procces" Grid.Row="1" >
+                <ScrollViewer   VerticalScrollBarVisibility="Auto">
+                    
+                    <RichTextBox Name="console" Block.LineHeight="2">
+                    </RichTextBox>
+                </ScrollViewer>
+               
+            </GroupBox>
+            <WrapPanel Margin="5" Grid.Row="2">
+                <Label Content="Proccess Time :"/>
+                <TextBox VerticalContentAlignment="Center" Text="{Binding CurrentTime}" Width="70"/>
+            </WrapPanel>
         </Grid>
-        <StackPanel Grid.Column="1">
-            <DataGrid Grid.Column="1" x:Name="gv" />
-            <DataGrid Grid.Column="1" x:Name="gvHs" />
-            <DataGrid Grid.Column="1" x:Name="gvFSK" />
-            <DataGrid Grid.Column="1" x:Name="gvFO" />
-            <Label Name="fo"></Label>
-        </StackPanel>
-        
+        <Grid Grid.Column="1"  Margin="10" x:Name="boardView" PreviewMouseLeftButtonDown="boardView_PreviewMouseLeftButtonDown" >
+            <Grid.Background>
+                <SolidColorBrush Color="#FFACA8A8" Opacity="0.2"/>
+            </Grid.Background>
+        </Grid>
+        <Grid Grid.Column="2" >
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <GroupBox  Header="Solution">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Button Click="btnGreedy_Click" Command="{Binding GreedyCommand}" Name="btnGreedy" MinWidth="120" Content="Greedy"/>
+                        <Button Click="btnBB_Click" Command="{Binding BranchCommand}"  MinWidth="120" Content="Branch And Bound" Name="btnBB"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Padding="10" Grid.Row="1" Margin="0,10" Header="Result">
+                    <Label Content="-"/>
+                </GroupBox>
+                <GroupBox Padding="10" Grid.Row="2"  Header="Ukuran Papan">
+                    <StackPanel HorizontalAlignment="Left">
+                        <RadioButton Name="board33" Checked="board33_Checked" Margin="3" Width="auto" Content="3 x 3"/>
+                        <RadioButton Name="board44" Checked="board44_Checked" Margin="3" Width="auto" Content="4 x 4"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Grid.Row="3" Padding="10"  Header="Game">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Button Name="mulai" Command="{Binding StartCommand}" MinWidth="120" Content="Mulai"/>
+                        <Button Name="ulang" MinWidth="120" Content="Ulangi" Command="{ Binding RestartCommand}"/>
+                        <Button Name="selesai" MinWidth="120" Content="Selesai" Command="{Binding CloseCommand}"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <WrapPanel Margin="10" VerticalAlignment="Bottom">
+                <TextBlock Text="{Binding BoardGame.Player1.Name,StringFormat={} {0} : }" HorizontalAlignment="Center"/>
+                <TextBlock Width="75" Text="{Binding Player1Win}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding BoardGame.Player2.Name,StringFormat={} {0} : }" HorizontalAlignment="Center"/>
+                <TextBlock Width="75" Text="{Binding Player2Win}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Draw : " HorizontalAlignment="Center"/>
+                <TextBlock Width="75" Name="draw" Text="{Binding Draw}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Game: " HorizontalAlignment="Center"/>
+                <TextBlock Width="75" Text="{Binding GameCount}" HorizontalAlignment="Center"/>
+            </WrapPanel>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <StackPanel VerticalAlignment="Bottom">
+                <Label Content="Game Time:" HorizontalAlignment="Center"/>
+                <TextBox FontSize="20" HorizontalContentAlignment="Center" Text="{Binding PlayTime}" Margin="3" Height="30"></TextBox>
+            </StackPanel>
+        </Grid>
     </Grid>
 
 </Window>

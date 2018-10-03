@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharedApp
+namespace GameLib
 {
   public enum PlayerPionType
     {

@@ -1,4 +1,4 @@
-﻿using SharedApp;
+﻿using GreedyLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,9 +17,5 @@ namespace GameLib
         Task<Player> GetPlayer(int Id);
         Task<Player> GetPlayerIsPlay();
         Task<int> GetBoardCount();
-        IEnumerable GetGreedy();
-        IEnumerable GetHs();
-        IEnumerable GetFSK();
-        string GetFO();
     }
 }

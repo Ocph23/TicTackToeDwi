@@ -8,9 +8,4 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>SharedApp</Import_RootNamespace>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Pion.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PlayerPionType.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Position.cs" />
-  </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
-﻿using SharedApp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,18 +6,25 @@ using System.Threading.Tasks;
 
 namespace GameLib
 {
-   public class Player
+   public class Player:BaseNotify
     {
         public Player(string name, PlayerType playerType,PlayerPionType pionType)
         {
             Pions = new List<Pion>();
             this.Name = name;
-            this.PlayerType = PlayerType;
+            this.PlayerType = playerType;
             this.PionType = pionType;
         }
 
         public int Id { get; set; }
-        public string Name { get; set; }
+        private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set {SetProperty(ref name ,value); }
+        }
+
         public PlayerType PlayerType { get; set; }
         public PlayerPionType PionType { get; set; }
         public bool IsPlay { get; internal set; }

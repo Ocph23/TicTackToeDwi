@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{700831AE-98CC-4DEB-B0D4-78C9D7DE5DE8}</ProjectGuid>
+    <ProjectGuid>{31234782-409A-494E-92F5-B5F0A0A4AA3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GreedyLib</RootNamespace>
-    <AssemblyName>GreedyLib</AssemblyName>
+    <RootNamespace>BranchAndBoundLib</RootNamespace>
+    <AssemblyName>BranchAndBoundLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,13 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumCollection.cs" />
-    <Compile Include="Greedy.cs" />
-    <Compile Include="GreedyHelper.cs" />
+    <Compile Include="BranchAndBound.cs" />
+    <Compile Include="BranchAndBoundHelper.cs" />
+    <Compile Include="GoaldState.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

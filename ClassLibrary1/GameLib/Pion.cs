@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharedApp
+namespace GameLib
 {
     public delegate void delChangePosition(Position position);
    public class Pion
@@ -33,4 +33,20 @@ namespace SharedApp
         public bool OnBoard { get; set; }
 
     }
+
+
+
+    public class Item
+    {
+        public string Name { get; set; }
+        public int Value { get; set; }
+    }
+
+    public class Strategy
+    {
+        public int Player1 { get; set; }
+        public int Player2 { get; set; }
+        public int Value { get; set; }
+    }
+
 }

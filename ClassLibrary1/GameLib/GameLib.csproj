@@ -42,17 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseNotify.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="IBoard.cs" />
+    <Compile Include="Pion.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerPionType.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BranchAndBoundLib\BranchAndBoundLib.csproj">
+      <Project>{31234782-409A-494E-92F5-B5F0A0A4AA3B}</Project>
+      <Name>BranchAndBoundLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreedyLib\GreedyLib.csproj">
       <Project>{700831AE-98CC-4DEB-B0D4-78C9D7DE5DE8}</Project>
       <Name>GreedyLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\SharedApp\SharedApp.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

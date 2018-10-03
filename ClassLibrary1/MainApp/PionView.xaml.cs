@@ -1,5 +1,4 @@
 ﻿using GameLib;
-using SharedApp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,15 +32,69 @@ namespace MainApp
             InitializeComponent();
             this.player = player;
             vm = new PionViewModel();
-            Width = 100;
-            Height = 100;
+     
             PionModel = pion;
             PionModel.OnChangePosition += PionModel_OnChangePosition1;
-            this.Background = new SolidColorBrush(Colors.Yellow);
+          
             if (pion.PionType == PlayerPionType.Circle)
             {
-               border.CornerRadius = new CornerRadius(90);
-                this.Background = new SolidColorBrush(Colors.Red);
+                BitmapImage img = new BitmapImage(
+                   new Uri(@"eclipse.png", UriKind.RelativeOrAbsolute));
+
+                ImageBrush imgBrush = new ImageBrush();
+                imgBrush.ImageSource = img;
+                this.Background = imgBrush;
+                //var eclipse = new Ellipse() { StrokeThickness=30};
+
+                //var stopgradiendCOllection = new GradientStopCollection();
+                //stopgradiendCOllection.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FFA40F0F"), 0));
+                //stopgradiendCOllection.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF250404"), 1));
+                //stopgradiendCOllection.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FEFF0909"), 0.587));
+                //var radial = new RadialGradientBrush(stopgradiendCOllection);
+                //eclipse.Stroke = radial;
+                //dataView.Children.Add(eclipse);
+            }else
+            {
+                BitmapImage img = new BitmapImage(
+                 new Uri(@"cross.png", UriKind.RelativeOrAbsolute));
+
+                ImageBrush imgBrush = new ImageBrush();
+                imgBrush.ImageSource = img;
+                this.Background = imgBrush;
+                //var canvas = new Grid();
+                //var pol1 = new Polyline() { StrokeThickness = 30 };
+                //pol1.Points = new PointCollection() {
+                //    new Point(30,30),
+                //    new Point(170,170),
+
+                //};
+                //pol1.RenderTransformOrigin = new Point(0.5, 0.5);
+                //var stopgradiendCOllection = new GradientStopCollection();
+                //stopgradiendCOllection.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF083C05"), 0));
+                //stopgradiendCOllection.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF083C05"), 0.877));
+                //stopgradiendCOllection.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF1FDE16"), 0.587));
+                //var radial = new LinearGradientBrush(stopgradiendCOllection) { EndPoint=new Point(0.5,1), MappingMode= BrushMappingMode.RelativeToBoundingBox , StartPoint=new Point(0.5,0) };
+                //pol1.Stroke = radial;
+
+
+
+                //var pol2 = new Polyline() { StrokeThickness = 30 };
+                //pol2.Points = new PointCollection() {
+                //    new Point(170,30),
+                //    new Point(30,170),
+
+                //};
+                //pol2.RenderTransformOrigin = new Point(0.5, 0.5);
+                //var stopgradiendCOllection2 = new GradientStopCollection();
+                //stopgradiendCOllection2.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF083C05"), 0));
+                //stopgradiendCOllection2.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF083C05"), 0.877));
+                //stopgradiendCOllection2.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF1FDE16"), 0.587));
+                //var radial2 = new LinearGradientBrush(stopgradiendCOllection2) { EndPoint = new Point(0.5, 1), MappingMode = BrushMappingMode.RelativeToBoundingBox, StartPoint = new Point(0.5, 0) };
+                //pol2.Stroke = radial2;
+
+                //canvas.Children.Add(pol1);
+                //canvas.Children.Add(pol2);
+                //dataView.Children.Add(canvas);
             }
 
             this.DataContext = vm;
