@@ -3,10 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d"
-        Title="AboutView" Height="450" Width="800">
+        xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource windowStyle}"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="AboutView" Height="400" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90*"/>
+            <RowDefinition Height="281*"/>
+        </Grid.RowDefinitions>
+        <Label Content="TENTANG " HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Height="42" Margin="218,29,218,19" Width="158" />
+        <StackPanel  Grid.Row="1" >
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
+                <TextBlock Text="Dwi Agustian Esra Mempun" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="Teknik Informatika S1" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock Text="Universitas Sains dan Teknologi Jayapura" HorizontalAlignment="Center"></TextBlock>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Margin="30">
+                <TextBlock Text="dwi.agustian14@gmail.com" HorizontalAlignment="Center"></TextBlock>
+
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

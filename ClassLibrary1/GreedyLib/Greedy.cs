@@ -42,7 +42,6 @@ namespace GreedyLib
             FSK = new List<Item>();
             int value = 0;
      
-            sb.AppendLine();
             sb.AppendLine("FSK");
             sb.AppendLine("Nama        Nilai");
             sb.AppendLine("-----------------");

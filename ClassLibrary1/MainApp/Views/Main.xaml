@@ -4,23 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource windowStyle}"
-        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen" FontSize="16"
         Title="Main" Height="450" Width="500">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30*"/>
+            <RowDefinition Height="40*"/>
             <RowDefinition Height="60*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Image VerticalAlignment="Center" Width="350" Height="70"  HorizontalAlignment="Center" Source="/MainApp;component/Images/logo.png" Stretch="Fill"/>
-        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1">
-            <Button Name="single" Content="Single Player" Click="single_Click"/>
-            <Button Name="multi" Content="Multi Player" Click="multi_Click"/>
+        <Image VerticalAlignment="Center" Width="421" Height="89"   HorizontalAlignment="Center" Source="/MainApp;component/Images/ticatac2.png" Stretch="Fill" Margin="45,19,26,0"/>
+        <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" >
+            <Button x:Name="single" Content="Single Player" Click="single_Click" >
+            </Button>
+            <Button x:Name="multi" Content="Multi Player" Click="multi_Click"/>
         </WrapPanel>
         <WrapPanel Margin="20" HorizontalAlignment="Center" Grid.Row="2">
-            <Button  Name="help" Content="Help" Click="help_Click"/>
-            <Button Name="about" Content="About" Click="about_Click"/>
-            <Button Name="exit" Content="EXIT" Click="exit_Click"/>
+            <Button  Name="help" Content="Aturan" Click="help_Click"/>
+            <Button Name="about" Content="Tentang" Click="about_Click"/>
+            <Button Name="exit" Content="Keluar" Click="exit_Click"/>
         </WrapPanel>
 
     </Grid>

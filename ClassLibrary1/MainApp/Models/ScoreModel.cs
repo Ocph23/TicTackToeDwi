@@ -11,9 +11,7 @@ namespace MainApp.Models
     [TableName("Score")]
     public class ScoreModel
     {
-        private long dataTime;
-        private TimeSpan _time;
-
+      
         [DbColumn("Id")]
         public int? Id { get; set; }
 
@@ -28,6 +26,13 @@ namespace MainApp.Models
 
         [DbColumn("Draw")]
         public int Draw { get; set; }
+
+        [DbColumn("Board")]
+        public int Board { get; set; }
+
+
+        [DbColumn("guid")]
+        public string GuidData { get; set; }
 
         [DbColumn("DataTime")]
         public long DataTime{
@@ -48,6 +53,32 @@ namespace MainApp.Models
                 dataTime = value.Ticks;
             }
         }
+
+
+        public int Game
+        {
+            get
+            {
+                return PlayerWin + ComputerWin + Draw;
+            }
+        }
+
+
+        public bool HaveValue
+        {
+            get
+            {
+                if (Time.Ticks > 0)
+                    return true;
+                return false;
+            }
+        }
+
+    
+
+        private long dataTime;
+        private TimeSpan _time;
+
 
     }
 }

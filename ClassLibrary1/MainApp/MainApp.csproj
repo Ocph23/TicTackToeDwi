@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CommandHandler.cs" />
+    <Compile Include="Models\Capture.cs" />
     <Compile Include="Models\PlayerCollection.cs" />
     <Compile Include="Models\PlayerModel.cs" />
     <Compile Include="Models\ScoreModel.cs" />
@@ -85,6 +86,9 @@
     </Compile>
     <Compile Include="Views\AddNewPlayer.xaml.cs">
       <DependentUpon>AddNewPlayer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CaptureView.xaml.cs">
+      <DependentUpon>CaptureView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HelpView.xaml.cs">
       <DependentUpon>HelpView.xaml</DependentUpon>
@@ -127,6 +131,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNewPlayer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CaptureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -210,6 +218,23 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\abstract-wallpaper-1366x768.jpg" />
+    <Resource Include="Images\abstract-wallpaper-1366x7681.jpg" />
+    <Resource Include="Images\abstract-wallpaper-1366x7682.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\board2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\tictactoe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ticatac2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Background Board.jpeg" />
   </ItemGroup>
   <Import Project="..\..\..\OcphDAL\Ocph.DAL\Ocph.DAL.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

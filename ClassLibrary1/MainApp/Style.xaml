@@ -5,49 +5,44 @@
         <Setter Property="Width" Value="130"/>
         <Setter Property="Height" Value="45"/>
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="Background" Value="#224656"/>
-        <Setter Property="Foreground" Value="#fef6c3"/>
+        <Setter Property="FontFamily" Value="Cooper Black"/>
+        <Setter Property="Background" Value="#FF26A3D3"/>
+        <Setter Property="Foreground" Value="#FFEFFF00"/>
+
     </Style>
 
     <Style x:Key="windowStyle" TargetType="Window">
         <Setter Property="Background" Value="#fef6c3"/>
-        <Setter Property="Foreground" Value="#575b58"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="Images/background board.jpeg"/>
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style TargetType="Label">
-        <Setter Property="FontFamily" Value="Segoe Print"/>
+        <Setter Property="FontFamily" Value="Berlin Sans FB"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFF9F5C" Offset="0"/>
-                    <GradientStop Color="#FFC15001" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground" Value="#FFEEFE00"/>
     </Style>
 
-    <Style TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="Segoe Print"/>
+    <Style x:Key="whiteLabel" TargetType="Label">
+        <Setter Property="FontFamily" Value="Berlin Sans FB"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFF9F5C" Offset="0"/>
-                    <GradientStop Color="#FFC15001" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <Style x:Key="whiteTextBock" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="Berlin Sans FB"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 
     <Style TargetType="RadioButton">
-        <Setter Property="FontSize" Value="20"/>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFFF9F5C" Offset="0"/>
-                    <GradientStop Color="#FFC15001" Offset="1"/>
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="FontFamily" Value="Berlin Sans FB"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="White"/>
     </Style>
 </ResourceDictionary>

@@ -22,25 +22,27 @@ namespace MainApp
     public partial class MainWindow : Window
     {
         private AppTime vm;
-
+        private string guid = Guid.NewGuid().ToString();
         public MainWindow(PlayerModel player)
         {
             InitializeComponent();
-            vm = new AppTime(boardView) { WindowClose=Close};
-            vm.SetPlayer(player);
+            vm = new AppTime(boardView, guid) { WindowClose=Close};
             vm.OnUpdateConsole += Vm_OnUpdateConsole;
             DataContext =vm;
             vm.GameMode = GameMode.SinglePlayer;
+            vm.SetPlayer(player);
+            vm.SelectedPlayer = new PlayerModel() {Id=player.Id,Name=player.Name, Score=player.Score };
             board33.IsChecked = true;
         }
 
         public MainWindow(string player1, string player2)
         {
             InitializeComponent();
-            vm = new AppTime(boardView);
+            vm = new AppTime(boardView, guid) { WindowClose = Close }; ;
             vm.OnUpdateConsole += Vm_OnUpdateConsole;
             DataContext = vm;
             vm.GameMode = GameMode.MultiPlayer;
+            vm.SetPlayer(player1, player2);
             board33.IsChecked = true;
         }
 
@@ -49,18 +51,6 @@ namespace MainApp
             console.AppendText(message);
             console.ScrollToEnd();
         }
-
-        //private void PionView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    if (vm.BoardGame.SelectedPion == null)
-        //    {
-        //        var pView = (sender as PionView);
-        //        vm.BoardGame.SelectedPion =pView.PionModel;
-        //        pView.Background = new SolidColorBrush(Colors.Green);
-        //    }
-        //    else
-        //        vm.BoardGame.SelectedPion = null;
-        //}
 
         private void boardView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -71,39 +61,152 @@ namespace MainApp
         private void ulang_Click(object sender, RoutedEventArgs e)
         {
             console.Document.Blocks.Clear();
-            vm.StartCommand.Execute(null);
+           // vm.StartCommand.Execute(null);
         }
         
 
         private void board33_Checked(object sender, RoutedEventArgs e)
         {
+            rowHeader.RowDefinitions.Clear();
+            colomHeader.ColumnDefinitions.Clear();
             vm.BoardLength = 3;
+            for(int i =0; i<vm.BoardLength;i++)
+            {
+                rowHeader.RowDefinitions.Add(new RowDefinition());
+                colomHeader.ColumnDefinitions.Add(new ColumnDefinition());
+                var item = new Label() {  Content = "V" + (i+1), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment = VerticalAlignment.Center };
+                item.Foreground = new BrushConverter().ConvertFromString("#FF26A3D3") as SolidColorBrush;
+                Grid.SetColumn(item, i);
+                this.colomHeader.Children.Add(item);
+                var item1 = new Label() { Content = "H" + (i+1), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment = VerticalAlignment.Center };
+                Grid.SetRow(item1, i);
+                this.rowHeader.Children.Add(item1);
+            }
+
             console.Document.Blocks.Clear();
             vm.LoadBoard(vm.BoardLength);
         }
 
         private void board44_Checked(object sender, RoutedEventArgs e)
         {
+            rowHeader.RowDefinitions.Clear();
+            colomHeader.ColumnDefinitions.Clear();
             console.Document.Blocks.Clear();
             vm.BoardLength = 4;
+            for (int i = 0; i < vm.BoardLength; i++)
+            {
+                rowHeader.RowDefinitions.Add(new RowDefinition());
+                colomHeader.ColumnDefinitions.Add(new ColumnDefinition());
+                var item = new Label() { Content = "V" + (i + 1), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment = VerticalAlignment.Center };
+                item.Foreground = new BrushConverter().ConvertFromString("#FF26A3D3") as SolidColorBrush;
+                Grid.SetColumn(item, i);
+                this.colomHeader.Children.Add(item);
+                var item1 = new Label() { Content = "H" + (i + 1), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment = VerticalAlignment.Center };
+                Grid.SetRow(item1, i);
+                this.rowHeader.Children.Add(item1);
+            }
             vm.LoadBoard(vm.BoardLength);
         }
 
-        private void btnGreedy_Click(object sender, RoutedEventArgs e)
+        private async void btnGreedy_Click(object sender, RoutedEventArgs e)
         {
-          var result=  vm.BoardGame.GetBestPosition(EngineType.Greedy);
-            console.AppendText(result.Item1);
-            console.AppendText("Best Position : " + result.Item2.Row + "," + result.Item2.Column);
-            vm.CurrentTime = result.Item3;
-            console.ScrollToEnd();
+            try
+            {
+                var capture = new Models.CaptureGreedyModel();
+                capture.Guid = guid;
+                capture.Board = vm.BoardLength;
+                string fileGuid = Guid.NewGuid().ToString();
+
+                if (chkCapture.IsChecked==true)
+                {
+                     capture.awal= await CapurePictureAsync(true, capture, fileGuid);
+                }
+                var result = vm.BoardGame.GetBestPosition(EngineType.Greedy);
+                console.AppendText("Greedy \r" + result.Item1);
+                console.AppendText("Posisi : " + result.Item2.Row + "," + result.Item2.Column + "\r\n\r\n");
+                vm.CurrentTime = result.Item3;
+                console.ScrollToEnd();
+                if (chkCapture.IsChecked == true)
+                {
+                    capture.Time = vm.CurrentTime;
+                    CapurePictureAsync(false, capture, fileGuid);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void btnBB_Click(object sender, RoutedEventArgs e)
+        private async Task<string> CapurePictureAsync(bool isBefore,  ICapture capture, string fileGuid)
         {
-            vm.BoardGame.GetBestPosition(EngineType.BranchAndBound);
+            await Task.Delay(1000);
+            System.Drawing.Image b = null;
+            System.Drawing.Size sz = new System.Drawing.Size((int)ActualWidth, (int)ActualHeight);
+            System.Drawing.Point loc = new System.Drawing.Point((int)Left+300, (int)Top+50);
+            using (b = new System.Drawing.Bitmap(505, 580))
+            {
+                using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(b))
+                {
+                    g.CopyFromScreen(loc, new System.Drawing.Point(0, 0), sz);
+                }
+
+                System.Drawing.Image x = new System.Drawing.Bitmap(b);
+
+                ImageBrush myBrush = new ImageBrush();
+                string file = string.Empty;
+                if (isBefore)
+                    file = $"awal-{fileGuid}.jpeg";
+                else
+                    file = $"akhir-{fileGuid}.jpeg";
+
+                x.Save(AppDomain.CurrentDomain.BaseDirectory + "Captures\\" +file, System.Drawing.Imaging.ImageFormat.Png);
+
+                if(!isBefore)
+                {
+                    capture.akhir = file;
+                    capture.Save();
+                    chkCapture.IsChecked = false;
+                }
+                return file;
+            }
         }
 
-      
+        private async void btnBB_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var capture = new Models.CaptureBandBModel();
+                capture.Guid = guid;
+                capture.Board = vm.BoardLength;
+                string fileGuid = Guid.NewGuid().ToString();
+                if (chkCapture.IsChecked == true)
+                {
+                    capture.awal = await CapurePictureAsync(true, capture, fileGuid);
+                }
+                var result = vm.BoardGame.GetBestPosition(EngineType.BranchAndBound);
+                console.AppendText("Branch & Bound \r" + result.Item1);
+                console.AppendText("Posisi : " + result.Item2.Row + "," + result.Item2.Column + "\r\n\r\n");
+                vm.CurrentTime = result.Item3;
+                console.ScrollToEnd();
+
+                if (chkCapture.IsChecked == true)
+                {
+                    capture.Time = vm.CurrentTime;
+                    CapurePictureAsync(false, capture, fileGuid);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
     }
 
     public class AppTime:Ocph.DAL.BaseNotify
@@ -111,13 +214,34 @@ namespace MainApp
         public event delegateUpdateConsole OnUpdateConsole;
         public Board BoardGame { get; set; }
         public List<PionView> Pions { get; } = new List<PionView>();
+
+        private string guid;
         private Grid boardView;
-        public PlayerModel SelectedPlayer { get; }
+        public PlayerModel SelectedPlayer { get; set; }
         public GameMode GameMode { get; set; }
         public int BoardLength { get; set; }
 
-        public AppTime(Grid board)
+        private bool caprureBoard;
+
+        public bool IsCaptureBoard
         {
+            get {
+                if (GameCount > 0)
+                    caprureBoard= false;
+                else
+                    caprureBoard = true;
+                return caprureBoard; }
+            set
+            {
+                SetProperty(ref caprureBoard, value);
+            }
+           
+        }
+
+
+        public AppTime(Grid board, string guid)
+        {
+            this.guid = guid;
             boardView = board;
             BoardGame = Machine.CreateNewGame();
             BoardGame.OnPlayerWin += Game_OnPlayerWin;
@@ -127,7 +251,7 @@ namespace MainApp
             GreedyCommand = new CommandHandler { CanExecuteAction = x => Mulai, ExecuteAction = GreedyCommandAction };
             BranchCommand = new CommandHandler { CanExecuteAction = x => Mulai, ExecuteAction = GreedyCommandAction };
 
-            StartCommand = new CommandHandler { CanExecuteAction = x => !Mulai, ExecuteAction = StartCommandAction };
+            StartCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = StartCommandAction };
             RestartCommand = new CommandHandler { CanExecuteAction = x => Mulai, ExecuteAction = ResetCommandAction };
             CloseCommand = new CommandHandler { CanExecuteAction = x => true, ExecuteAction = CloseCommandAction };
             UpdateTime();
@@ -139,7 +263,7 @@ namespace MainApp
             {
                 Stop();
                 await Task.Delay(1);
-                if (GameMode == GameMode.SinglePlayer && SelectedPlayer.Score == null)
+                if (GameMode == GameMode.SinglePlayer && SelectedPlayer!=null && SelectedPlayer.Score == null)
                 {
                     SelectedPlayer.Score = new ScoreModel
                     {
@@ -149,7 +273,9 @@ namespace MainApp
                         PlayerId = SelectedPlayer.Id.Value,
                         Time = PlayTime
                     };
-                    SelectedPlayer.SaveChange();
+
+
+                    SelectedPlayer.SaveScore(board3,board4);
                 }
                 WindowClose();
             }
@@ -157,6 +283,84 @@ namespace MainApp
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private ScoreModel board3;
+
+        private ScoreModel board4;
+
+        
+                    
+        private void Game_OnPlayerWin(Player player)
+        {
+            Stop();
+            Mulai = false;
+            SetScore(player,"WIN");
+            MessageBox.Show(player.Name + " Win");
+
+        }
+
+        private void SetScore(Player player, string v)
+        {
+            if ((board3 == null || board4 == null)&&SelectedPlayer!=null)
+            {
+                board3 = new ScoreModel() { PlayerId = SelectedPlayer.Id.Value, Board = 3, GuidData=guid };
+                board4 = new ScoreModel() { PlayerId = SelectedPlayer.Id.Value, Board = 4 , GuidData = guid };
+            }
+
+            if (SelectedPlayer==null)
+            {
+                board3 = new ScoreModel() {  Board = 3 };
+                board4 = new ScoreModel() { Board = 4 };
+            }
+
+            if (v == "WIN")
+            {
+                if (BoardLength == 3)
+                {
+                    if (player.Id == 1)
+                    {
+                        Player1Win++;
+                        board3.PlayerWin++;
+                    }
+                    else
+                    {
+                        Player2Win++;
+                        board3.ComputerWin++;
+                    }
+                    board3.Time += PlayTime;
+                }
+                else
+                {
+                    if (player.Id == 1)
+                    {
+                        Player1Win++;
+                        board4.PlayerWin++;
+                    }
+                    else
+                    {
+                        Player2Win++;
+                        board4.ComputerWin++;
+                    }
+                    board4.Time += PlayTime;
+                }
+
+            }
+            else
+            {
+                Draw++;
+                if (BoardLength == 3)
+                {
+                    board3.Draw++;
+                    board3.Time += PlayTime;
+                }
+                else
+                {
+                    board4.Draw++;
+                    board4.Time += PlayTime;
+                }
+            }
+
         }
 
         private void ResetCommandAction(object obj)
@@ -175,13 +379,23 @@ namespace MainApp
 
         private void StartCommandAction(object obj)
         {
-            GameCount++;
-            Mulai = true;
-            LoadBoard(BoardLength);
-            AppStopwatch = Stopwatch.StartNew();
+
+            
+            if(GameCount>0 && Mulai==true)
+            {
+                this.RestartCommand.Execute(null);
+            }
+            else
+            {
+                GameCount++;
+                Mulai = true;
+                LoadBoard(BoardLength);
+               
+            }
+          
         }
 
-        private async void SetPlayer(string player1, string player2)
+        internal async void SetPlayer(string player1, string player2)
         {
             await BoardGame.SetPlayer(new Player(player1, PlayerType.Human, PlayerPionType.Cross),
                   new Player(player2, PlayerType.Human, PlayerPionType.Circle));
@@ -225,7 +439,7 @@ namespace MainApp
             Stop();
             Mulai = false;
             MessageBox.Show("GAME DRAW");
-            Draw++;
+            SetScore(null, "Draw");
         }
 
         //Event Action
@@ -234,21 +448,12 @@ namespace MainApp
             OnUpdateConsole?.Invoke(text);
         }
 
-        private void Game_OnPlayerWin(Player player)
-        {
-            Stop();
-            Mulai = false;
-            if (player.Id == 1)
-                Player1Win++;
-            else
-                Player2Win++;
-            MessageBox.Show("Player " + player.Id + " Win");
 
-        }
 
+      
         private async void Game_ComputerOnPlaying(Player player, Position position)
         {
-            if (FreePosition(position))
+            if (FreePosition(position) && Mulai)
             {
                 var pion = new PionView(await player.CreatePion(), player);
                 pion.PionModel.Position = position;
@@ -268,6 +473,9 @@ namespace MainApp
 
         public async void PreviewMouseLeftButtonDown(bool countGraderThen0)
         {
+            if(Mulai && Pions.Count<=0)
+                AppStopwatch = Stopwatch.StartNew();
+
             if (Mulai)
             {
                 Player player = await BoardGame.GetPlayerIsPlay();
@@ -349,6 +557,13 @@ namespace MainApp
             });
         }
 
+
+
+        private void Caprure()
+        {
+          
+        }
+
        
 
         private TimeSpan _currentTime;
@@ -409,11 +624,15 @@ namespace MainApp
         public int GameCount
         {
             get { return _gameCount; }
-            set { SetProperty(ref _gameCount, value); }
+            set {
+                IsCaptureBoard = false;
+                SetProperty(ref _gameCount, value);
+                
+            }
         }
 
         private EngineType engineType;
-
+       
         public EngineType EngineType
         {
             get { return engineType; }

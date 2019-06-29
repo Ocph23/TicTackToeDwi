@@ -32,9 +32,21 @@ namespace MainApp
 
                 reader.Close();
 
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS Greedy (Id INTEGER PRIMARY KEY AUTOINCREMENT, Guid text, board INTEGER, awal text, akhir text, waktu long, file text)";
 
-                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS Score (Id INTEGER PRIMARY KEY AUTOINCREMENT, PlayerId INTEGER NOT NULL DEFAULT 0, PlayerWin INTEGER,
-                                    ComputerWin INTEGER, Draw INTEGER, DataTime long )";
+                reader = cmd.ExecuteReader();
+
+                reader.Close();
+
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS BandB (Id INTEGER PRIMARY KEY AUTOINCREMENT, Guid text,board INTEGER, awal text, akhir text, waktu long, file text)";
+
+                reader = cmd.ExecuteReader();
+
+                reader.Close();
+
+
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS Score (Id INTEGER PRIMARY KEY AUTOINCREMENT,  PlayerId INTEGER NOT NULL DEFAULT 0,
+                                Guid text,   Board INTEGER, PlayerWin INTEGER, ComputerWin INTEGER, Draw INTEGER, DataTime long )";
 
                 reader = cmd.ExecuteReader();
 
@@ -44,6 +56,8 @@ namespace MainApp
 
         public IRepository<PlayerModel> Players { get { return new Repository<PlayerModel>(this); } }
         public IRepository<ScoreModel> Scores { get { return new Repository<ScoreModel>(this); } }
+        public IRepository<CaptureGreedyModel> GreedyCapture { get { return new Repository<CaptureGreedyModel>(this); } }
+        public IRepository<CaptureBandBModel> BandBCapture { get { return new Repository<CaptureBandBModel>(this); } }
 
         internal void IsExist<T>()
         {

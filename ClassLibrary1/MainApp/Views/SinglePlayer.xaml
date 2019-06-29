@@ -6,21 +6,25 @@
         xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource windowStyle}"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="Single Player" Height="450" Width="500">
+  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
-        <WrapPanel Margin="20" HorizontalAlignment="Center" Grid.Row="0">
-            <Button Command="{Binding SinglePlayerScoreCommand}" Name="score" Content="Player Score" Height="50" Width="100"/>
-            <Button Command="{Binding PlayCommand}" Name="play" Content="Play" Height="50" Width="100" />
-            <Button Command="{Binding NewPlayerCommand}" Name="newPlayer" Content="New Player" Height="50" Width="100" />
+        <WrapPanel Margin="10,10" HorizontalAlignment="Center" Grid.Row="0">
+            <Button Command="{Binding SinglePlayerScoreCommand}" Name="score" Content="Player Score" Height="50" Width="110"/>
+            <Button Command="{Binding PlayCommand}" Name="play" Content="Play" Height="50" Width="110" />
+            <Button Command="{Binding NewPlayerCommand}" Name="newPlayer" Content="New Player" Height="50" Width="110" />
         </WrapPanel>
         <DockPanel Margin="10" Grid.Row="1">
-            <Label Content="Pilih Pemain" DockPanel.Dock="Top" Margin="5">
+            <Label Style="{StaticResource whiteLabel}" Content="Pilih Pemain" DockPanel.Dock="Top" Margin="5">
                 
             </Label>
-            <DataGrid Margin="5" RowHeight="30" FontSize="14" VerticalContentAlignment="Center" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedItem}" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" >
+            <DataGrid Margin="5" RowHeight="30" FontSize="14" VerticalContentAlignment="Center" ItemsSource="{Binding SourceView}" SelectedItem="{Binding SelectedItem}" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserAddRows="False" Opacity="0.8" >
+                <DataGrid.Background>
+                    <SolidColorBrush Color="#FFF0F0F0" Opacity="0.3" />
+                </DataGrid.Background>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="No" Width="50" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="Nama Pemain" Width="*" Binding="{Binding Name}"/>

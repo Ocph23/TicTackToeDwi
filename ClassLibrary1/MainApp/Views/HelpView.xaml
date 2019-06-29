@@ -3,10 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MainApp.Views"
-        mc:Ignorable="d"
-        Title="HelpView" Height="450" Width="800">
+        xmlns:local="clr-namespace:MainApp.Views" Style="{StaticResource windowStyle}"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="Aturan" Height="400" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="80*"/>
+        </Grid.RowDefinitions>
+        <Label Content="ATURAN" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" />
+        <StackPanel Grid.Row="1" Margin="30">
+            <StackPanel Margin="15" >
+                <Grid  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Width="30" Text="1."/>
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Pemain hanya dapat meletakan simbol pada kotak yang kosong, yang tidak terisi simbol lawan ataupun simbol pemain itu sendiri."/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Margin="15" >
+                <Grid  >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Width="30" Text="2."/>
+                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="Pemain yang terlebih dahulu meletakn simbol-simbolnya dalam kotak secara vertikal, horizontal, ataupun diagonal adalah pemenang."/>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

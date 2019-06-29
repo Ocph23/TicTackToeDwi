@@ -31,6 +31,7 @@ namespace MainApp.Models
             set { score = value; }
         }
 
+        public string GuidData { get;  set; }
 
         private ScoreModel GetScore()
         {
@@ -59,52 +60,65 @@ namespace MainApp.Models
             {
                 using (var db = new OcphDbContext())
                 {
-                    if (Id!=null)
+                    if (Id!=null && Id>0)
                     {
                         int id = Id.Value;
                         if (!db.Players.Update(O => new { O.Name }, this, O => O.Id == id))
                             throw new SystemException("Data Tidak Tersipan");
-
-                        if(Score!=null)
-                        {
-                            if(Score.Id==null)
-                            {
-                               Score.Id = db.Scores.InsertAndGetLastID(Score);
-                                if(Score.Id<=0)
-                                {
-                                    Score.Id = null;
-                                    throw new SystemException("Data Tidak Tersipan");
-                                }
-                            }
-                            else
-                            {
-                                if (!db.Scores.Update(O => new { O.ComputerWin,O.Draw,O,O.PlayerWin,O.DataTime}, Score, O => O.Id == Score.Id))
-                                    throw new SystemException("Data Tidak Tersipan");
-                            }
-                        }
-
                     }else
                     {
-                        var result = db.Players.Select();
-                        foreach (var item in result.Where(O => O.Name.Contains(Name)))
-                        {
-                            if (item.Name.ToUpper() == Name.ToUpper())
-                            {
-                                throw new SystemException("Data Sudah Ada");
-                            }
-                        }
-
                         Id = db.Players.InsertAndGetLastID(this);
                         if (Id != null && Id == 0)
                         {
                             Id = null;
                             throw new SystemException("Data Tidak Tersipan");
                         }
+
                     }
-
-
                     return true;
                     
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new SystemException(ex.Message);
+            }
+        }
+
+
+
+        public bool SaveScore(ScoreModel board3, ScoreModel board4)
+        {
+            try
+            {
+                using (var db = new OcphDbContext())
+                {
+
+                    if (board3!=null &&  board3.HaveValue)
+                    {
+                        board3.Id = db.Scores.InsertAndGetLastID(board3);
+                        if (board3.Id <= 0)
+                        {
+                            board3.Id = null;
+                            throw new SystemException("Data Tidak Tersipan");
+                        }
+
+                    }
+
+                    if (board4 != null &&  board4.HaveValue)
+                    {
+
+                        board4.Id = db.Scores.InsertAndGetLastID(board4);
+                        if (board4.Id <= 0)
+                        {
+                            board4.Id = null;
+                            throw new SystemException("Data Tidak Tersipan");
+                        }
+
+                    }
+
+                    return true;
+
                 }
             }
             catch (Exception ex)

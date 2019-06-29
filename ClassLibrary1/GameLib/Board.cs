@@ -174,27 +174,46 @@ namespace GameLib
                 var result = Engine.GetSolution(this.GetBoardArray(), Player1.Id);
                 var foPosition = Engine.GetBestPosition(Player1.Id);
                 sw.Stop();
-                ComputerOnPlaying?.Invoke(Player1, new Position(foPosition.Item1, foPosition.Item2));
-                return new Tuple<string, Position,TimeSpan>(result, new Position(foPosition.Item1, foPosition.Item2),sw.Elapsed);
-            }else
+                if (foPosition != null)
+                {
+                    ComputerOnPlaying?.Invoke(Player1, new Position(foPosition.Item1, foPosition.Item2));
+                    return new Tuple<string, Position, TimeSpan>(result, new Position(foPosition.Item1, foPosition.Item2), sw.Elapsed);
+                }
+                throw new SystemException("Tentukan Langkah Awal Anda");
+
+            }
+            else
             {
                 
                 IMachine machine = Machine.CreateBranchAndBound(BoardMatrix);
                 var result = Engine.GetSolution(this.GetBoardArray(), Player1.Id);
                 var foPosition = Engine.GetBestPosition(Player1.Id);
                 sw.Stop();
-                ComputerOnPlaying?.Invoke(Player1, new Position(foPosition.Item1, foPosition.Item2));
-                return new Tuple<string, Position, TimeSpan>(result, new Position(foPosition.Item1, foPosition.Item2), sw.Elapsed);
+
+                if(foPosition!=null)
+                {
+                    ComputerOnPlaying?.Invoke(Player1, new Position(foPosition.Item1, foPosition.Item2));
+                    return new Tuple<string, Position, TimeSpan>(result, new Position(foPosition.Item1, foPosition.Item2), sw.Elapsed);
+                }
+                throw new SystemException("Tentukan Langkah Awal Anda");
             }
         }
 
         public Task ComputerPlaying(Player player2)
         {
-            Engine.SetNewBoard(this.GetBoardArray());
-            var foPosition = Engine.GetBestPosition(Player2.Id);
-            if(foPosition!=null)
-                ComputerOnPlaying?.Invoke(player2, new Position(foPosition.Item1, foPosition.Item2));
-            return Task.FromResult(0);
+            try
+            {
+                Engine.SetNewBoard(this.GetBoardArray());
+                var foPosition = Engine.GetBestPosition(Player2.Id);
+                if (foPosition != null)
+                    ComputerOnPlaying?.Invoke(player2, new Position(foPosition.Item1, foPosition.Item2));
+                return Task.FromResult(0);
+            }
+            catch (Exception ex)
+            {
+
+                throw new SystemException("Tentukan Langkah Pertama Anda");
+            }
         }
 
         public Task<Player> GetPlayer(int Id)

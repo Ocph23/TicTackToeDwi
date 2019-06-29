@@ -23,10 +23,12 @@ namespace MainApp.Views
         {
             InitializeComponent();
 
+            System.IO.Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory+"Captures");
         }
 
         private void single_Click(object sender, RoutedEventArgs e)
         {
+
             var form = new Views.SinglePlayer();
             form.ShowDialog();
         }
@@ -39,13 +41,13 @@ namespace MainApp.Views
 
         private void help_Click(object sender, RoutedEventArgs e)
         {
-            var form = new Views.SinglePlayer();
+            var form = new Views.HelpView();
             form.ShowDialog();
         }
 
         private void about_Click(object sender, RoutedEventArgs e)
         {
-            var form = new Views.SinglePlayer();
+            var form = new Views.AboutView();
             form.ShowDialog();
         }
 
